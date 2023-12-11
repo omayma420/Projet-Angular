@@ -1,0 +1,28 @@
+<!-- Gestion des patients.component.html -->
+<div class="container">
+  <h1>Paiement</h1>
+  <hr>
+  <form (ngSubmit)="onSubmit()" #patientForm="ngForm">
+    <div class="form-group">
+      <label for="type_carte">Type de carte</label>
+      <select class="form-control" id="type_carte" name="type_carte" [(ngModel)]="newPaiement.type_carte" required>
+        <option value="carte_bancaire">Carte bancaire</option>
+        <option value="carte_e_dinar">Carte e-dinar</option>
+      </select>
+
+      <label for="numero_carte">Numéro de carte</label>
+      <input type="text" class="form-control" id="numero_carte" placeholder="Enter numéro de carte" [(ngModel)]="newPaiement.numero_carte" name="numero_carte" required>
+
+      <label for="date_expiration_carte">Date d'expiration de la carte</label>
+      <input type="datetime-local"  class="form-control" id="date_expiration_carte" placeholder="Enter date d'expiration de la carte" [(ngModel)]="newPaiement.date_expiration_carte" name="date_expiration_carte" required>
+      
+      
+    </div>
+    <button  id="submitButton" type="submit" class="btn btn-primary">Confirmer le paiement</button>
+  </form>
+  <hr>
+</div>
+<footer>
+  <p>&copy; 2023 Agence de location de voitures AutoCar</p>
+  <p>Contactez-nous : info@locationvoitures.com</p>
+</footer>
