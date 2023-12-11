@@ -52,12 +52,13 @@ footer {
   background-color: #2980b9; /* Couleur de fond du bouton au survol */
 }
 /* Ajoutez ces styles dans votre feuille de style CSS ou balise <style> */
-/* Ajoutez ces styles dans votre feuille de style CSS ou balise <style> */
+
 .logo {
-  width: 100px; /* Ajustez la largeur du logo selon vos besoins */
-  height: auto;
-  
-  top: 100px; /* Ajustez la position verticale du logo */
-  right: 100px; /* Ajustez la position horizontale du logo */
+  position: fixed;
+  top: 60px; /* Ajustez la position verticale du logo */
+  left: 244px; /* Ajustez la position horizontale du logo */
+  height: 60px; /* Ajustez la hauteur du logo */
 }
+
+
 
