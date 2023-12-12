@@ -72,4 +72,38 @@ export class ClientComponent implements OnInit {
   private resetForm() {
     this.newClient = { id: 0, nom: '', email: '', adresse: '', tel: '' };
   }
+
+  onDelete(index: number) {
+    console.log(index);
+
+    const deletedTask = this.clientArray[index];
+
+    if (deletedTask && deletedTask.id) {
+      this.dataService.deleteData(deletedTask.id).subscribe(
+        response => {
+          console.log('Server response after delete:', response);
+          this.clientArray.splice(index, 1);
+        },
+        error => {
+          console.error('Error deleting data:', error);
+        }
+      );
+    } else {
+      console.error('Task or Task ID is missing.');
+    }
+  }
+
+  onUpdate(index: number) {
+    const updatedTask = this.clientArray[index];
+
+    if (updatedTask && updatedTask.id) {
+      console.log('Updating Patient ID:', updatedTask.id);
+      console.log('Updating Patient Data:', updatedTask);
+
+      // Assign the existing data to the updatedPatientForm property
+      this.newClient = { ...updatedTask };
+    } else {
+      console.error('Task or Task ID is missing.');
+    }
+  }
 }

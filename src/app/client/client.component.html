@@ -45,6 +45,26 @@
     
     <button   id="submitButton" type="submit" class="btn btn-primary">Confirmer mes données</button>
   </form>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Email</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of clientArray; index as i">
+        <td>{{ t.id }}</td>
+        <td>{{ t.nom }}</td>
+        <td>{{ t.email }}</td>
+        <td><button class="btn btn-warning btn-sm" (click)="onUpdate(i)">Update</button></td>
+        <td><button class="btn btn-danger btn-sm" (click)="onDelete(i)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
   <hr>
 </div>
 <footer>
