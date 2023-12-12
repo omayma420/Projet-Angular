@@ -24,6 +24,8 @@ export class PaiementService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(`${this.baseUrl}/api/paiement`, paiement, { headers });
   }
-
+  deleteData(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/api/paiement/delete/${id}`);
+  }
   
 }

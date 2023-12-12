@@ -3,8 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ClientService } from '../client.service';
 import { Router } from '@angular/router';
-import { FactureService } from '../facture.service'; // Assurez-vous que le chemin est correct
+import { FactureService } from '../facture.service';
+import { SharedService } from '../shared-service.service';
 
+interface Client {
+  id: number;
+  nom: string;
+  email: string;
+  adresse: string;
+  tel: string;
+}
 
 @Component({
   selector: 'app-client',
@@ -12,15 +20,15 @@ import { FactureService } from '../facture.service'; // Assurez-vous que le chem
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements OnInit {
-  clientArray: { id: number, nom: string; email: string; adresse: string; tel: string; }[] = [];
-  newClient: { id: number; nom: string; email: string; adresse: string; tel: string; } = { id: 0, nom: '', email: '', adresse: '', tel: '' };
-  
+  clientArray: Client[] = [];
+  newClient: Client = { id: 0, nom: '', email: '', adresse: '', tel: '' };
 
   constructor(
     private dataService: ClientService,
-    private factureService: FactureService, // Injectez le service FactureService
+    private factureService: FactureService,
+    private sharedService: SharedService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadClientData();
@@ -28,17 +36,11 @@ export class ClientComponent implements OnInit {
 
   loadClientData() {
     this.dataService.getAllClient().subscribe(
-      (data: any[]) => {
+      (data: Client[]) => {
         console.log('Server response:', data);
 
         if (Array.isArray(data) && data.length > 0) {
-          this.clientArray = data.map((client: { id: number, nom: string; email: string; adresse: string; tel: string  }) => ({
-            id: client.id,
-            nom: client.nom,
-            email: client.email ,
-            adresse: client.adresse,
-            tel: client.tel,
-          }));
+          this.clientArray = data.map(client => ({ ...client }));
         } else {
           console.warn('Data is not an array or is empty:', data);
         }
@@ -51,19 +53,17 @@ export class ClientComponent implements OnInit {
 
   onSubmit() {
     this.dataService.postData(this.newClient).subscribe(
-      response => {
+      (response: Client) => {
         console.log('Server response after save:', response);
         this.loadClientData();
-        
-        // Enregistrez les données du client dans le service FactureService
         this.factureService.setClientData(response);
-        
-        // Naviguez vers le composant suivant (paiement)
         this.router.navigate(['/client/paiement']);
       },
       error => {
         console.error('Error saving data:', error);
-      });
+        // Handle error (e.g., display a user-friendly message)
+      }
+    );
 
     // Reset the form
     this.resetForm();
@@ -105,5 +105,15 @@ export class ClientComponent implements OnInit {
     } else {
       console.error('Task or Task ID is missing.');
     }
+  }
+
+  reserverVoiture(voiture: any) {
+    // ... (existing code)
+
+    this.sharedService.setSelectedModel(voiture.modele); // Update the selected model in the service
+  }
+
+  getSelectedModel(): string {
+    return this.sharedService.getSelectedModel();
   }
 }

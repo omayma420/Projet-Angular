@@ -26,24 +26,56 @@
 <div class="container">
   <h1>Remplir le formulaire</h1>
   <hr>
-  <form (ngSubmit)="onSubmit()" #clientForm="ngForm">
+    
+    
+  <form (ngSubmit)="onSubmit()" #clientForm="ngForm" novalidate>
+    <div class="container">
+      <h1>Client Component</h1>
+      <p>Selected Model: {{ getSelectedModel() }}</p>
+      <!-- ... (other content) -->
+    </div>
+    <!-- Add 'novalidate' attribute to the form to disable browser validation -->
     <div class="form-group">
       <label for="nom">Nom client</label>
       <input type="text" class="form-control" id="nom" placeholder="Entrer votre nom" name="nom" [(ngModel)]="newClient.nom" required>
       
+      <div *ngIf="clientForm.controls['nom'].invalid && (clientForm.controls['nom'].dirty || clientForm.controls['nom'].touched)">
+        <div class="alert alert-danger">
+          Nom client est requis.
+        </div>
+      </div>
+    
+      
+
       <label for="email">Email </label>
       <input type="text" class="form-control" id="email" placeholder="Entrer votre email"  name="email" [(ngModel)]="newClient.email" required>
-      
+
+      <div *ngIf="clientForm.controls['email'].invalid && (clientForm.controls['email'].dirty || clientForm.controls['email'].touched)">
+        <div class="alert alert-danger">
+          Email est requis.
+        </div>
+      </div>
+
       <label for="adresse">Adresse</label>
       <input type="text" class="form-control" id="adresse" placeholder="Entrer votre adresse"  name="adresse" [(ngModel)]="newClient.adresse" required>
-      
+
+      <div *ngIf="clientForm.controls['adresse'].invalid && (clientForm.controls['adresse'].dirty || clientForm.controls['adresse'].touched)">
+        <div class="alert alert-danger">
+          Adresse est requise.
+        </div>
+      </div>
+
       <label for="tel">Tel</label>
       <input type="text" class="form-control" id="tel" placeholder="Entrer votre téléphone"  name="tel" [(ngModel)]="newClient.tel" required>
-      
-      
+
+      <div *ngIf="clientForm.controls['tel'].invalid && (clientForm.controls['tel'].dirty || clientForm.controls['tel'].touched)">
+        <div class="alert alert-danger">
+          Tel est requis.
+        </div>
+      </div>
     </div>
-    
-    <button   id="submitButton" type="submit" class="btn btn-primary">Confirmer mes données</button>
+    <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">Submit</button>
+    <!-- Disable the button if the form is invalid -->
   </form>
   <table class="table">
     <thead>

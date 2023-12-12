@@ -70,12 +70,12 @@
             <div *ngFor="let voiture of voitureArray" class="card" style="width: 20rem;">
                 <img [src]="voiture.imageUrl" class="card-img-top" alt="Image de la voiture">
                 <div class="card-body">
-                    <h4 class="card-text" title="Marque">Marque: {{ voiture.modele }}</h4>
+                    <h4 class="card-text" title="Marque">modele: {{ voiture.modele }}</h4>
                     <p class="card-text">Couleur: {{ voiture.couleur }}</p>
                     <p class="card-text">Année de fabrication: {{ voiture.date_fab }}</p>
                     <p class="card-text">Prix de location: {{ voiture.prix_location }}</p>
                     <!-- Ajoutez d'autres détails de la voiture si nécessaire -->
-                    <a href="/reservation" class="btn btn-primary">Réserver</a>
+                    <a href="/client" class="btn btn-primary">Réserver</a>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { VoitureService } from '../voiture.service';
 import { Router } from '@angular/router';
 import { FactureService } from '../facture.service';
+import { SharedService } from '../shared-service.service'
 
 @Component({
   selector: 'app-voiture',
@@ -15,6 +16,7 @@ export class VoitureComponent implements OnInit {
   constructor(
     private dataService: VoitureService,
     private factureService: FactureService,
+    private SharedService: SharedService, // Inject the SharedService
     private router: Router
   ) { }
 
@@ -32,8 +34,6 @@ export class VoitureComponent implements OnInit {
         console.error('Error fetching data:', error);
       }
     );
-
-    
   }
 
   reserverVoiture(voiture: any) {
@@ -43,21 +43,19 @@ export class VoitureComponent implements OnInit {
         console.log('Server response (Single Voiture for Reservation):', data);
         // Ajoutez la voiture spécifique à votre modèle ou effectuez d'autres traitements si nécessaire
 
-        
-            console.log('Reservation successful:', data);
+        console.log('Reservation successful:', data);
 
-            // Utilisez le service FactureService pour réserver la voiture
-            this.factureService.reserveVoiture(data);
+        // Utilisez le service FactureService pour réserver la voiture
+        this.factureService.reserveVoiture(data);
 
-            // Naviguez vers le composant suivant (reservation)
-            this.router.navigate(['/reservation']);
-          },
-          (error) => {
-            console.error('Error reserving voiture:', error);
-          }
-        );
-      
-      
+        // Naviguez vers le composant suivant (reservation)
+        this.router.navigate(['/reservation']);
+
+        this.SharedService.setSelectedModel(data.modele); // Update the selected model in the service
+      },
+      (error) => {
+        console.error('Error reserving voiture:', error);
+      }
+    );
   }
 }
-  

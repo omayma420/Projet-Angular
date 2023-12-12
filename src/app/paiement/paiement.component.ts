@@ -72,4 +72,38 @@ export class PaiementComponent implements OnInit {
   private resetForm() {
     this.newPaiement = { id: 0, type_carte: '', numero_carte: '', date_expiration_carte: new Date() };
   }
+
+  onDelete(index: number) {
+    console.log(index);
+
+    const deletedTask = this.paiementArray[index];
+
+    if (deletedTask && deletedTask.id) {
+      this.dataService.deleteData(deletedTask.id).subscribe(
+        response => {
+          console.log('Server response after delete:', response);
+          this.paiementArray.splice(index, 1);
+        },
+        error => {
+          console.error('Error deleting data:', error);
+        }
+      );
+    } else {
+      console.error('Task or Task ID is missing.');
+    }
+  }
+
+  onUpdate(index: number) {
+    const updatedTask = this.paiementArray[index];
+
+    if (updatedTask && updatedTask.id) {
+      console.log('Updating paiement ID:', updatedTask.id);
+      console.log('Updating paiement Data:', updatedTask);
+
+      // Assign the existing data to the updatedPatientForm property
+      this.newPaiement = { ...updatedTask };
+    } else {
+      console.error('Task or Task ID is missing.');
+    }
+  }
 }
